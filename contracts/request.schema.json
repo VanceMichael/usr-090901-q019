@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "化妆品疑似制假批次召回协同服务 request",
+  "type": "object",
+  "required": [
+    "source_event_id",
+    "aggregate_id",
+    "aggregate_revision",
+    "type",
+    "actor_role",
+    "occurred_at"
+  ],
+  "properties": {
+    "source_event_id": {},
+    "aggregate_id": {},
+    "aggregate_revision": {},
+    "type": {},
+    "actor_role": {},
+    "occurred_at": {}
+  },
+  "additionalProperties": false
+}

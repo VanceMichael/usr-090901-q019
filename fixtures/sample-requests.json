@@ -1,0 +1,10 @@
+[
+  {
+    "source_event_id": "recall-3",
+    "aggregate_id": "lot-C9",
+    "aggregate_revision": 1,
+    "type": "suspect",
+    "actor_role": "regulator",
+    "occurred_at": "2026-09-08T02:17:00Z"
+  }
+]

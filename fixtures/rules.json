@@ -1,0 +1,10 @@
+{
+  "version": "2026-09-08",
+  "theme": "化妆品制假售假场所查封",
+  "reason_codes": [
+    "COSMETIC_RECALL",
+    "DISTRIBUTION_GRAPH",
+    "REVISIONED_REPORT"
+  ],
+  "notes": "Deterministic evaluation fixture; implementation must not fetch remote data."
+}
