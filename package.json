@@ -7,6 +7,23 @@
     "node": ">=22"
   },
   "scripts": {
-    "validate:scaffold": "node scaffold/validate.mjs"
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "migrate": "tsx src/cli/migrate.ts",
+    "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
+    "validate:scaffold": "node scaffold/validate.mjs",
+    "acceptance": "bash scripts/acceptance.sh"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "embedded-postgres": "^17.10.0-beta.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }
