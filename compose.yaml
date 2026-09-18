@@ -5,6 +5,7 @@ services:
     volumes:
       - .:/workspace:ro
     command: node /workspace/scaffold/validate.mjs
+
   postgres:
     image: postgres:17-alpine
     environment:
@@ -18,5 +19,38 @@ services:
       retries: 20
     volumes:
       - app-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    image: recall-service:local
+    environment:
+      DATABASE_URL: postgres://app:local-dev-only@postgres:5432/app
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 12
+      start_period: 10s
+
+  # 黑盒验收：以 HTTP 客户端身份打 app 服务，不共享进程内状态。
+  # RESTART_PHASE=setup|verify 由 scripts/acceptance.sh 分两阶段驱动（中间真实重启 app 容器）。
+  acceptance:
+    image: recall-service:local
+    build: .
+    profiles: ["acceptance"]
+    environment:
+      APP_BASE_URL: http://app:8080
+      RESTART_PHASE: ${RESTART_PHASE:-}
+    depends_on:
+      app:
+        condition: service_healthy
+    command: ["node", "--test", "dist/test/**/*.test.js"]
+
 volumes:
   app-data:
